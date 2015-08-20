@@ -13,7 +13,7 @@ export default class App extends React.Component {
           data: 'timestamp'
         },
         {
-          name: 'Size',
+          name: 'Bytes',
           data: 'size'
         },
         {

@@ -1,4 +1,5 @@
 import React from 'react';
+import api from './api';
 
 export default class App extends React.Component {
   render() {
@@ -13,7 +14,7 @@ export default class App extends React.Component {
         </header>
         <article className='pure-u-1'>
           <section className='app'>
-            {this.renderReports([])}
+            {this.renderReports(api.getReports())}
           </section>
         </article>
       </div>

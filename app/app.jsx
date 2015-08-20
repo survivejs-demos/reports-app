@@ -21,8 +21,6 @@ export default class App extends React.Component {
     );
   }
   renderReports(reports) {
-    console.log(reports);
-
     return (
       <table className='pure-table'>
         <thead>
@@ -35,15 +33,28 @@ export default class App extends React.Component {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>date should go here</td>
-            <td>size should go here</td>
-            <td>hit total should go here</td>
-            <td>cache hit should go here</td>
-            <td>cache missed should go here</td>
-          </tr>
+          {reports.map(this.renderReport)}
         </tbody>
       </table>
+    );
+  }
+  renderReport(report, i) {
+    const formatDate = (d) => {
+      return d.toISOString().split('T')[0];
+    }
+
+    const formatNumber = (n) => {
+      return n.toLocaleString('en-US');
+    }
+
+    return (
+      <tr key={`report-${i}`}>
+        <td>{formatDate(report.timestamp)}</td>
+        <td>{formatNumber(report.size)}</td>
+        <td>{formatNumber(report.hit)}</td>
+        <td>{formatNumber(report.cacheHit)}</td>
+        <td>{formatNumber(report.noncacheHit)}</td>
+      </tr>
     );
   }
 };

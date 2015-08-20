@@ -3,29 +3,40 @@ import api from './api';
 import ReportsTable from './reports_table.jsx';
 
 export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      headers: [
+        {
+          name: 'Date',
+          data: 'timestamp'
+        },
+        {
+          name: 'Size',
+          data: 'size'
+        },
+        {
+          name: 'Hit total',
+          data: 'hit'
+        },
+        {
+          name: 'Cache hit',
+          data: 'cacheHit'
+        },
+        {
+          name: 'Cache missed',
+          data: 'noncacheHit'
+        }
+      ],
+      reports: api.getReports()
+    };
+
+    this.headerClicked = this.headerClicked.bind(this);
+  }
   render() {
-    const headers = [
-      {
-        name: 'Date',
-        data: 'timestamp'
-      },
-      {
-        name: 'Size',
-        data: 'size'
-      },
-      {
-        name: 'Hit total',
-        data: 'hit'
-      },
-      {
-        name: 'Cache hit',
-        data: 'cacheHit'
-      },
-      {
-        name: 'Cache missed',
-        data: 'noncacheHit'
-      }
-    ];
+    const headers = this.state.headers;
+    const reports = this.state.reports;
 
     return (
       <div className='pure-g'>
@@ -41,13 +52,21 @@ export default class App extends React.Component {
             <ReportsTable
               headerClicked={this.headerClicked}
               headers={headers}
-              reports={api.getReports()} />
+              reports={reports} />
           </section>
         </article>
       </div>
     );
   }
   headerClicked(data) {
-    console.log('header clicked', data);
+    const reports = this.state.reports;
+
+    reports.sort(function(a, b) {
+      return a[data] < b[data] ? 1 : -1;
+    });
+
+    this.setState({
+      reports: reports
+    });
   }
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import api from './api';
-import ReportsTable from './reports_table.jsx';
+import ReportsTable from './ReportsTable.jsx';
 
 export default class App extends React.Component {
   constructor(props) {
